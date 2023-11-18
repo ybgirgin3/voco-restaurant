@@ -41,6 +41,7 @@ export const restaurantMock: Restaurant = {
 
 // ** ORDER
 export const orderMock: Order = {
+  user: 1,
   menu: menuMock,
   createdAt: '2023-11-18',
   status: 1,
