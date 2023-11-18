@@ -13,7 +13,7 @@ import { Order } from '../../interfaces/Order';
 
 const dot = require('dotenv').config();
 
-export class DdService {
+export class DbService {
   private db: Db;
   private collection: Collection;
 
@@ -38,7 +38,9 @@ export class DdService {
 
   // create
   async create(document: any): Promise<InsertOneResult<any>> {
-    return await this.collection.insertOne(document);
+    let ret = await this.collection.insertOne(document);
+    console.log('ret', ret);
+    return ret;
   }
 
   // read all or read by a filter

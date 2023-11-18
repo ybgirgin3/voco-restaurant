@@ -9,6 +9,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
     message: 'menu list of a restaurant',
     response: menuMock,
+    status: 200,
   });
 });
 

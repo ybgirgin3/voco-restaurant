@@ -11,7 +11,7 @@ export interface Restaurant {
   name: string;
   rate: number;
   location: string;
-  menus: [Menu];
+  menus?: [Menu];
   type: RestaurantType;
-  reviews: [Reviews];
+  reviews?: [Reviews];
 }

@@ -9,6 +9,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
     message: 'order list of user',
     response: orderMock,
+    status: 200,
   });
 });
 

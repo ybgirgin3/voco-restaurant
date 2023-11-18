@@ -21,5 +21,6 @@ export function errorHandler(
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
     response: null,
+    status: 200,
   });
 }

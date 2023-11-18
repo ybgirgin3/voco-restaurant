@@ -20,6 +20,7 @@ app.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
     message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
     response: 'asdasd',
+    status: 200,
   });
 });
 
