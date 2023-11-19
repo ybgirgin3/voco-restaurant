@@ -16,17 +16,19 @@ const dot = require('dotenv').config();
 export class DbService {
   private db: Db;
   private collection: Collection;
+  private _collection: string;
 
-  constructor() {
+  constructor(_collection: string) {
     const uri = dot.parsed.MONGO_URI;
     const client = new MongoClient(uri);
+    this._collection = _collection;
 
     client
       .connect()
       .then(() => {
         console.log('connected to mongo uri');
         this.db = client.db();
-        this.collection = this.db.collection('main');
+        this.collection = this.db.collection(this._collection);
       })
       .catch((error) => {
         console.error('error connecting to mongo', error);
@@ -37,15 +39,14 @@ export class DbService {
   // *** CRUD ***
 
   // create
-  async create(document: any): Promise<InsertOneResult<any>> {
+  async create(document: Restaurant | Order | Menu): Promise<InsertOneResult<Restaurant | Order | Menu>> {
     let ret = await this.collection.insertOne(document);
-    console.log('ret', ret);
     return ret;
   }
 
   // read all or read by a filter
-  async readAllOrByFilter(filters = {}): Promise<any[]> {
-    return await this.collection.find(filters).toArray();
+  async readAllOrByFilter(filters: {} = {}): Promise<any[]> {
+    return this.collection.find(filters).toArray();
   }
 
   // update
@@ -53,7 +54,7 @@ export class DbService {
     id: string,
     updatedDocument: Menu | Restaurant | Order,
   ): Promise<UpdateResult> {
-    return await this.collection.updateOne(
+    return this.collection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updatedDocument },
     );
@@ -61,6 +62,6 @@ export class DbService {
 
   // delete
   async delete(id: string): Promise<DeleteResult> {
-    return await this.collection.deleteOne({ _id: new ObjectId(id) });
+    return this.collection.deleteOne({ _id: new ObjectId(id) });
   }
 }
